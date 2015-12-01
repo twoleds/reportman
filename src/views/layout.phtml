@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <?= $this->headLink()
+            ->appendStylesheet($this->basePath('css/bootstrap.css'));
+        ?>
+        <?= $this->headScript()
+            ->appendFile($this->basePath('js/jquery.js'))
+            ->appendFile($this->basePath('js/bootstrap.js'));
+        ?>
+    </head>
+    <body>
+
+        <div class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="<?= $this->url('home'); ?>">
+                        <span class="glyphicon glyphicon-piggy-bank"></span>
+                        <?= $this->translate('Reportman'); ?>
+                    </a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <?= $this->translate('New report'); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="glyphicon glyphicon-list"></span>
+                            <?= $this->translate('Reports'); ?>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="<?= $this->url('logout'); ?>">
+                            <span class="glyphicon glyphicon-log-out"></span>
+                            <?= $this->translate('Logout'); ?>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <?= $this->content; ?>
+        </div>
+
+    </body>
+</html>

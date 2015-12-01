@@ -1,0 +1,18 @@
+{
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.zendframework.com/"
+    }
+  ],
+  "require": {
+    "zendframework/zendframework": "2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Reportman\\": "src",
+      "Reportman\\Controllers\\": "src/controllers",
+      "Reportman\\Models\\": "src/models"
+    }
+  }
+}
