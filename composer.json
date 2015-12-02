@@ -12,6 +12,7 @@
     "psr-4": {
       "Reportman\\": "src",
       "Reportman\\Controllers\\": "src/controllers",
+      "Reportman\\Helpers\\": "src/helpers",
       "Reportman\\Models\\": "src/models"
     }
   }

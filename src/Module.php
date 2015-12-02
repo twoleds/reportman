@@ -27,7 +27,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
             'controllers' => array(
                 'invokables' => array(
                     'Home' => 'Reportman\Controllers\HomeController',
-                    'Session' => 'Reportman\Controllers\SessionController',
+                    'User' => 'Reportman\Controllers\UserController',
                 ),
             ),
             'router' => [
@@ -47,7 +47,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
                         'options' => [
                             'route' => '/login/',
                             'defaults' => [
-                                'controller' => 'Session',
+                                'controller' => 'User',
                                 'action' => 'login',
                             ],
                         ],
@@ -57,8 +57,18 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
                         'options' => [
                             'route' => '/logout/',
                             'defaults' => [
-                                'controller' => 'Session',
+                                'controller' => 'User',
                                 'action' => 'logout',
+                            ],
+                        ],
+                    ],
+                    'register' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/register/',
+                            'defaults' => [
+                                'controller' => 'User',
+                                'action' => 'register',
                             ],
                         ],
                     ],
@@ -93,9 +103,11 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
     {
         return [
             'factories' => [
-                'Database' =>'Zend\Db\Adapter\AdapterServiceFactory',
-                'ReportService' =>'Reportman\Models\ReportServiceFactory',
-                'UserService' =>'Reportman\Models\UserServiceFactory',
+                'Database' => 'Zend\Db\Adapter\AdapterServiceFactory',
+                'ReportService' => 'Reportman\Models\ReportServiceFactory',
+                'UserService' => 'Reportman\Models\UserServiceFactory',
+                'Session' => 'Zend\Session\Service\SessionManagerFactory',
+                'AuthService' => 'Reportman\Helpers\AuthServiceFactory',
             ]
         ];
     }

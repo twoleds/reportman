@@ -20,6 +20,65 @@ class UserService
         $this->adapter = $adapter;
     }
 
+    /**
+     * Find user by the specified email address.
+     *
+     * @param string $email
+     * @return null|User
+     */
+    public function findByEmail($email)
+    {
+        $statement = $this->adapter->createStatement(
+            'SELECT * FROM `users` WHERE `email` = :email LIMIT 1'
+        );
+
+        $params = new ParameterContainer();
+        $params['email'] = $email;
+
+        $statement->setParameterContainer($params);
+        $result = $statement->execute();
+
+        $user = null;
+        if ($result->count() > 0) {
+            $result->rewind();
+            $user = new User($result->current());
+        }
+
+        return $user;
+    }
+
+    /**
+     * Find user by the specified identifier.
+     *
+     * @param int $id
+     * @return null|User
+     */
+    public function findById($id)
+    {
+        $statement = $this->adapter->createStatement(
+            'SELECT * FROM `users` WHERE `id` = :id LIMIT 1'
+        );
+
+        $params = new ParameterContainer();
+        $params['id'] = $id;
+
+        $statement->setParameterContainer($params);
+        $result = $statement->execute();
+
+        $user = null;
+        if ($result->count() > 0) {
+            $result->rewind();
+            $user = new User($result->current());
+        }
+
+        return $user;
+    }
+
+    /**
+     * Store the specified user to database.
+     *
+     * @param User $user
+     */
     public function save(User $user)
     {
 
