@@ -143,4 +143,20 @@ class User
         return password_verify($password, $this->password);
     }
 
+    /**
+     * Returns avatar icon of the user.
+     *
+     * @param int $size
+     * @param string $default
+     * @return string
+     */
+    public function getAvatar($size = 24, $default = 'monsterid')
+    {
+        return sprintf(
+            'http://www.gravatar.com/avatar/%s?s=%d&d=%s',
+            md5(strtolower(trim($this->getEmail()))),
+            $size, $default
+        );
+    }
+
 }

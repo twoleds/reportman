@@ -1,9 +1,9 @@
 <?php
 namespace Reportman\Controllers;
 
-use Reportman\Models\User;
-use Reportman\Models\UserService;
+use Reportman\Helpers\AuthService;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class HomeController extends AbstractActionController
 {
@@ -11,15 +11,13 @@ class HomeController extends AbstractActionController
     public function indexAction()
     {
 
-        /** @var UserService $userService */
-        $userService = $this->getServiceLocator()->get('UserService');
-
-//        $user = new User();
-//        $user->setName('Jaroslav Kuba');
-//        $user->setEmail('kubajaroslav@gmail.com');
-//        $user->setPassword('localhost');
-//
-//        $userService->save($user);
+        /** @var AuthService $authService */
+        $authService = $this->getServiceLocator()->get('AuthService');
+        if (!$authService->authorize()) {
+            $this->redirect()->toRoute('login');
+        } else {
+            $this->redirect()->toRoute('report-index');
+        }
 
         return parent::indexAction();
     }

@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+
+        <h2 class="text-center"><?= $this->translate('User registration'); ?></h2>
+        <br>
+
+        <form action="<?= $this->url('register'); ?>" method="post">
+
+            <?php if (!empty($this->error)): ?>
+                <div class="alert alert-danger">
+                    <strong><?= $this->translate('Registration failed.'); ?></strong>
+                </div>
+            <?php endif; ?>
+
+            <div class="form-group">
+                <label for="register-name"><?= $this->translate('Full name'); ?></label>
+                <input class="form-control" type="text" name="name" value="<?= htmlspecialchars($this->name); ?>" id="register-name" required />
+            </div>
+            <div class="form-group">
+                <label for="register-email"><?= $this->translate('Email'); ?></label>
+                <input class="form-control" type="email" name="email" value="<?= htmlspecialchars($this->email); ?>" id="register-email" required />
+            </div>
+            <div class="form-group">
+                <label for="register-password"><?= $this->translate('Password'); ?></label>
+                <input class="form-control" type="password" name="password" value="" id="register-password" required />
+            </div>
+            <div class="form-group">
+                <label for="register-password-check"><?= $this->translate('Retype password'); ?></label>
+                <input class="form-control" type="password" name="password_check" value="" id="register-password-check" required />
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary btn-block">
+                    <?= $this->translate('Register'); ?>
+                </button>
+            </div>
+        </form>
+
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var $registerName = $('#register-name');
+        var $registerEmail = $('#register-email');
+        var $registerPassword = $('#register-password');
+        if ($registerName.val() == '') {
+            $registerName.focus();
+        } else if ($registerEmail.val() == '') {
+            $registerEmail.focus();
+        } else if ($registerPassword.val() == '') {
+            $registerPassword.focus();
+        }
+    });
+</script>

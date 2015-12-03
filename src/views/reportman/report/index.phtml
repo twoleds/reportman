@@ -1,0 +1,48 @@
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th><?= $this->translate('Date'); ?></th>
+            <th><?= $this->translate('Issue ID'); ?></th>
+            <th><?= $this->translate('Issue Text'); ?></th>
+            <th><?= $this->translate('Spent Time'); ?></th>
+            <th><?= $this->translate('Estimated Time'); ?></th>
+            <th><?= $this->translate('Complete'); ?></th>
+            <th><?= $this->translate('Actions'); ?></th>
+        </tr>
+    </thead>
+    <?php if (!empty($this->reports)): ?>
+        <tbody>
+            <?php $currentDate = null; ?>
+            <?php /** @var Reportman\Models\Report $report */ ?>
+            <?php foreach ($this->reports as $report): ?>
+                <?php if ($currentDate != $report->getDate()): ?>
+                    <tr>
+                        <td>
+                            <strong><?= $report->getDateAsDateTime()->format('d. m. Y'); ?></strong>
+                        </td>
+                        <td colspan="6">&nbsp;</td>
+                    </tr>
+                    <?php $currentDate = $report->getDate(); ?>
+                <?php endif; ?>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><?= $report->getIssueId(); ?></td>
+                    <td><?= htmlspecialchars($report->getIssueText()); ?></td>
+                    <td><?= $this->formatTime($report->getSpentTime()); ?></td>
+                    <td><?= $this->formatTime($report->getEstimatedTime()); ?></td>
+                    <td>
+                        <div class="progress" style="margin: 0;" title="<?= $report->getComplete(); ?>%">
+                            <div class="progress-bar progress-bar-success progress-striped" style="width: <?= $report->getComplete(); ?>%;"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-xs btn-success" onclick="alert('Not implemented yet');">
+                            <span class="glyphicon glyphicon-edit"></span>
+                            <?= $this->translate('Edit'); ?>
+                        </button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    <?php endif; ?>
+</table>

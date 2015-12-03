@@ -3,8 +3,9 @@ namespace Reportman;
 
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
-class Module implements ConfigProviderInterface, ServiceProviderInterface
+class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewHelperProviderInterface
 {
 
     /**
@@ -28,6 +29,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
                 'invokables' => array(
                     'Home' => 'Reportman\Controllers\HomeController',
                     'User' => 'Reportman\Controllers\UserController',
+                    'Report' => 'Reportman\Controllers\ReportController',
                 ),
             ),
             'router' => [
@@ -62,6 +64,16 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
                             ],
                         ],
                     ],
+                    'keep-alive' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/keep-alive/',
+                            'defaults' => [
+                                'controller' => 'User',
+                                'action' => 'keepAlive',
+                            ],
+                        ],
+                    ],
                     'register' => [
                         'type' => 'Literal',
                         'options' => [
@@ -69,6 +81,26 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
                             'defaults' => [
                                 'controller' => 'User',
                                 'action' => 'register',
+                            ],
+                        ],
+                    ],
+                    'report-create' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/report/create/',
+                            'defaults' => [
+                                'controller' => 'Report',
+                                'action' => 'create',
+                            ],
+                        ],
+                    ],
+                    'report-index' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/report/index/',
+                            'defaults' => [
+                                'controller' => 'Report',
+                                'action' => 'index',
                             ],
                         ],
                     ],
@@ -109,6 +141,21 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
                 'Session' => 'Zend\Session\Service\SessionManagerFactory',
                 'AuthService' => 'Reportman\Helpers\AuthServiceFactory',
             ]
+        ];
+    }
+
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Config
+     */
+    public function getViewHelperConfig()
+    {
+        return [
+            'invokables' => [
+                'formatTime' => 'Reportman\Helpers\TimeHelper'
+            ],
         ];
     }
 }

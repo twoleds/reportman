@@ -28,6 +28,20 @@ class Report
     /** @var string */
     private $date;
 
+    public function __construct(array $row = null)
+    {
+        if (!empty($row)) {
+            $this->id = (int)$row['id'];
+            $this->issueId = $row['issue_id'];
+            $this->issueText = $row['issue_text'];
+            $this->spentTime = $row['spent_time'];
+            $this->estimatedTime = $row['estimated_time'];
+            $this->complete = $row['complete'];
+            $this->userId = $row['user_id'];
+            $this->date = $row['date'];
+        }
+    }
+
     /**
      * @return int
      */
@@ -186,6 +200,19 @@ class Report
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Returns date of this report as DateTime instance.
+     *
+     * @return \DateTime
+     */
+    public function getDateAsDateTime()
+    {
+        if (!empty($this->date)) {
+            return (new \DateTime())->createFromFormat('Y-m-d', $this->date);
+        }
+        return new \DateTime();
     }
 
     /**

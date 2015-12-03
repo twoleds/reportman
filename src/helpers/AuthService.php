@@ -42,6 +42,8 @@ class AuthService
             return $this->currentUser;
         }
 
+        $this->sessionManager->start();
+
         $sessionStorage = $this->sessionManager->getStorage();
         if (empty($email)) {
             if (!empty($sessionStorage['auth_user'])) {
@@ -52,6 +54,7 @@ class AuthService
             if (!empty($user) && $user->verifyPassword($password)) {
                 $this->currentUser = $user;
                 $sessionStorage['auth_user'] = $user->getId();
+                $this->sessionManager->writeClose();
             }
         }
 
