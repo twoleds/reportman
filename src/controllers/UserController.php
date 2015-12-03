@@ -148,7 +148,7 @@ class UserController extends AbstractActionController
 
             }
 
-            $this->error = true;
+            $viewModel->setVariable('error', true);
 
         }
 

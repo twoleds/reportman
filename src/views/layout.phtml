@@ -22,6 +22,7 @@
                         <?= $this->translate('Reportman'); ?>
                     </a>
                 </div>
+                <?php if (!empty($this->currentUser)): ?>
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="javascript:alert('Not implemented yet');">
@@ -36,6 +37,7 @@
                         </a>
                     </li>
                 </ul>
+                <?php endif; ?>
                 <?php if (!empty($this->currentUser)): ?>
                     <ul class="nav navbar-nav navbar-right">
                         <li>

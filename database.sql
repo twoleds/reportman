@@ -40,7 +40,7 @@ SET
 
 INSERT INTO `reports`
 SET
-  `issue_id`       = NULL,
+  `issue_id`       = 1,
   `issue_text`     = 'Studying zend documentation',
   `spent_time`     = 90,
   `estimated_time` = 4710,
@@ -50,7 +50,7 @@ SET
 
 INSERT INTO `reports`
 SET
-  `issue_id`       = NULL,
+  `issue_id`       = 1,
   `issue_text`     = 'Studying zend adapters',
   `spent_time`     = 30,
   `estimated_time` = 4680,
@@ -60,7 +60,7 @@ SET
 
 INSERT INTO `reports`
 SET
-  `issue_id`       = NULL,
+  `issue_id`       = 2,
   `issue_text`     = 'Created skeleton application for reportman project',
   `spent_time`     = 60,
   `estimated_time` = 2340,
@@ -70,7 +70,7 @@ SET
 
 INSERT INTO `reports`
 SET
-  `issue_id`       = NULL,
+  `issue_id`       = 1,
   `issue_text`     = 'Studying zend session',
   `spent_time`     = 30,
   `estimated_time` = 4650,
@@ -80,7 +80,7 @@ SET
 
 INSERT INTO `reports`
 SET
-  `issue_id`       = NULL,
+  `issue_id`       = 2,
   `issue_text`     = 'Added login/logout to the system',
   `spent_time`     = 90,
   `estimated_time` = 2250,
@@ -90,10 +90,30 @@ SET
 
 INSERT INTO `reports`
 SET
-  `issue_id`       = NULL,
+  `issue_id`       = 2,
   `issue_text`     = 'Added registration',
   `spent_time`     = 60,
   `estimated_time` = 2190,
   `complete`       = 15,
+  `user_id`        = 1,
+  `date`           = '2015-12-03';
+
+INSERT INTO `reports`
+SET
+  `issue_id`       = 1,
+  `issue_text`     = 'Studying how to create custom helper for view',
+  `spent_time`     = 15,
+  `estimated_time` = 4635,
+  `complete`       = 15,
+  `user_id`        = 1,
+  `date`           = '2015-12-03';
+
+INSERT INTO `reports`
+SET
+  `issue_id`       = 2,
+  `issue_text`     = 'Created list for reports (without filtering)',
+  `spent_time`     = 60,
+  `estimated_time` = 2130,
+  `complete`       = 20,
   `user_id`        = 1,
   `date`           = '2015-12-03';
