@@ -11,7 +11,8 @@ CREATE TABLE `users` (
   `id`       INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `name`     VARCHAR(45)  NOT NULL,
   `email`    VARCHAR(255) NOT NULL UNIQUE KEY,
-  `password` VARCHAR(255) NOT NULL
+  `password` VARCHAR(255) NOT NULL,
+  `admin`    TINYINT(1)   NOT NULL             DEFAULT 0
 )
   ENGINE = 'InnoDB';
 
@@ -24,6 +25,7 @@ CREATE TABLE `reports` (
   `complete`       TINYINT       NOT NULL,
   `user_id`        INT UNSIGNED  NOT NULL,
   `date`           DATE          NOT NULL,
+  INDEX (`user_id`, `date`, `issue_id`),
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
     ON DELETE RESTRICT
     ON UPDATE RESTRICT
@@ -36,6 +38,13 @@ INSERT INTO `users`
 SET
   `name`     = 'Jaroslav Kuba',
   `email`    = 'kubajaroslav@gmail.com',
+  `password` = '$2y$10$HnAkR6XsWeuv4l.oo2sj0OaUEWRGZbBrDhO4AL8sd981Cm4cNH59G',
+  `admin`    = 1;
+
+INSERT INTO `users`
+SET
+  `name`     = 'Lukáš Kováč',
+  `email`    = 'lukas.kvc@gmail.com',
   `password` = '$2y$10$HnAkR6XsWeuv4l.oo2sj0OaUEWRGZbBrDhO4AL8sd981Cm4cNH59G';
 
 INSERT INTO `reports`
@@ -117,3 +126,13 @@ SET
   `complete`       = 20,
   `user_id`        = 1,
   `date`           = '2015-12-03';
+
+INSERT INTO `reports`
+SET
+  `issue_id`       = 2,
+  `issue_text`     = 'Added filtering and exporting of reports',
+  `spent_time`     = 60,
+  `estimated_time` = 2070,
+  `complete`       = 25,
+  `user_id`        = 1,
+  `date`           = '2015-12-04';

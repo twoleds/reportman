@@ -1,3 +1,67 @@
+<h1 class="page-header"><?= $this->translate('Report list'); ?></h1>
+
+<form action="<?= $this->url('report-index'); ?>" method="get">
+    <div class="row">
+        <div class="col-md-2 col-sm-3">
+            <div class="form-group">
+                <label for="filter-date-from"><?= $this->translate('From date'); ?></label>
+                <input type="text" name="from" class="form-control" id="filter-date-from"
+                       value="<?= $this->formatDate($this->dateFrom); ?>"/>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-3">
+            <div class="form-group">
+                <label for="filter-date-to"><?= $this->translate('To date'); ?></label>
+                <input type="text" name="to" class="form-control" id="filter-date-to"
+                       value="<?= $this->formatDate($this->dateTo); ?>"/>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-2">
+            <div class="form-group">
+                <label for="filter-issue"><?= $this->translate('Issue ID'); ?></label>
+                <input type="number" name="issue" class="form-control" id="filter-issue"
+                       value="<?= $this->issueId; ?>"/>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-4">
+            <div class="form-group">
+                <label for="filter-user"><?= $this->translate('User'); ?></label>
+                <select name="user" class="form-control" id="filter-user" data-live-search="true">
+                    <option value=""><?= $this->translate('Current user'); ?></option>
+                    <option data-divider="true"></option>
+                    <?php if (!empty($this->users)): ?>
+                        <?php /** @var Reportman\Models\User $user */ ?>
+                        <?php foreach ($this->users as $user): ?>
+                            <option
+                                value="<?= $user->getId(); ?>" <?= $user->getId() == $this->userId ? 'selected' : ''; ?>
+                                data-content="<img src='<?= $user->getAvatar(20); ?>' width=20 height=20> <?= htmlspecialchars($user->getName()); ?>">
+                                <?= htmlspecialchars($user->getName()); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <?php $exportUrl = $this->url('report-export', [], ['query' => [
+        'from' => $this->dateFrom,
+        'to' => $this->dateTo,
+        'issue' => $this->issueId,
+        'user' => $this->userId,
+    ]]); ?>
+    <a class="btn btn-primary" href="<?= $exportUrl; ?>">
+        <span class="glyphicon glyphicon-save"></span>
+        <?= $this->translate('Export to file'); ?>
+    </a>
+    <a class="btn btn-default"
+       href="<?= $this->url('report-index'); ?>"><?= $this->translate('Reset filter'); ?></a>
+</div>
+
+<br/>
+
 <table class="table table-hover table-striped">
     <thead>
         <tr>
@@ -10,9 +74,10 @@
             <th><?= $this->translate('Actions'); ?></th>
         </tr>
     </thead>
-    <?php if (!empty($this->reports)): ?>
-        <tbody>
+    <tbody>
+        <?php if (!empty($this->reports)): ?>
             <?php $currentDate = null; ?>
+            <?php $reportCount = 0; ?>
             <?php /** @var Reportman\Models\Report $report */ ?>
             <?php foreach ($this->reports as $report): ?>
                 <?php if ($currentDate != $report->getDate()): ?>
@@ -32,7 +97,8 @@
                     <td><?= $this->formatTime($report->getEstimatedTime()); ?></td>
                     <td>
                         <div class="progress" style="margin: 0;" title="<?= $report->getComplete(); ?>%">
-                            <div class="progress-bar progress-bar-success progress-striped" style="width: <?= $report->getComplete(); ?>%;"></div>
+                            <div class="progress-bar progress-bar-success progress-striped"
+                                 style="width: <?= $report->getComplete(); ?>%;"></div>
                         </div>
                     </td>
                     <td>
@@ -42,7 +108,17 @@
                         </button>
                     </td>
                 </tr>
+                <?php $reportCount++; ?>
             <?php endforeach; ?>
-        </tbody>
+        <?php endif; ?>
+    </tbody>
+    <?php if ($reportCount == 0): ?>
+        <tfoot>
+            <tr>
+                <td colspan="7">
+                    <?= $this->translate('No records available for current filter.'); ?>
+                </td>
+            </tr>
+        </tfoot>
     <?php endif; ?>
 </table>

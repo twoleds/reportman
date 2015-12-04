@@ -21,6 +21,9 @@ class User
     /** @var string */
     private $password;
 
+    /** @var bool */
+    private $admin;
+
     /**
      * Initializes new instance of an user.
      *
@@ -33,6 +36,7 @@ class User
             $this->name = (string)$params['name'];
             $this->email = (string)$params['email'];
             $this->password = (string)$params['password'];
+            $this->admin = (bool)$params['admin'];
         }
     }
 
@@ -157,6 +161,38 @@ class User
             md5(strtolower(trim($this->getEmail()))),
             $size, $default
         );
+    }
+
+    /**
+     * Returns true if this user is admin; otherwise false.
+     *
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * Sets admin permission.
+     *
+     * @param boolean $admin
+     * @return User
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+        return $this;
+    }
+
+    /**
+     * Returns alias of user name.
+     *
+     * @return string
+     */
+    public function getAlias()
+    {
+        return str_replace(' ', '-', mb_strtolower($this->name, 'utf-8'));
     }
 
 }

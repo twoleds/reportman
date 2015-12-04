@@ -104,6 +104,16 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
                             ],
                         ],
                     ],
+                    'report-export' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/report/export/',
+                            'defaults' => [
+                                'controller' => 'Report',
+                                'action' => 'export',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             'view_manager' => [
@@ -154,7 +164,8 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
     {
         return [
             'invokables' => [
-                'formatTime' => 'Reportman\Helpers\TimeHelper'
+                'formatTime' => 'Reportman\Helpers\TimeHelper',
+                'formatDate' => 'Reportman\Helpers\DateHelper',
             ],
         ];
     }

@@ -6,10 +6,6 @@ use Zend\View\Helper\AbstractHelper;
 class TimeHelper extends AbstractHelper
 {
 
-    public function __construct()
-    {
-    }
-
     /**
      * Formats the specified time in minutes.
      *

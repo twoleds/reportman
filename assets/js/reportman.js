@@ -12,3 +12,19 @@ setInterval(function () {
     });
 }, 5*60*1000);
 
+$(function () {
+
+    $('#filter-date-from, #filter-date-to').datepicker({
+        format: "dd.mm.yyyy",
+        weekStart: 1,
+        autoclose: true,
+        todayHighlight: true
+    });
+
+    $('#filter-user').selectpicker();
+
+    $('#filter-date-from, #filter-date-to, #filter-user, #filter-issue').on('change', function () {
+        $(this).closest('form').submit();
+    });
+
+});

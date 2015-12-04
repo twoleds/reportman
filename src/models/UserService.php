@@ -21,6 +21,26 @@ class UserService
     }
 
     /**
+     * Returns all users.
+     *
+     * @return \Generator
+     */
+    public function findAll()
+    {
+
+        $statement = $this->adapter->createStatement(
+            'SELECT * FROM `users`'
+        );
+
+        $result = $statement->execute();
+
+        foreach ($result as $row) {
+            yield new User($row);
+        }
+
+    }
+
+    /**
      * Find user by the specified email address.
      *
      * @param string $email
