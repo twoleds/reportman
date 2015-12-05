@@ -7,18 +7,11 @@ use Reportman\Helpers\TimeHelper;
 use Reportman\Models\Report;
 use Reportman\Models\ReportService;
 use Reportman\Models\UserService;
-use Zend\InputFilter\Input;
-use Zend\InputFilter\InputFilter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class ReportController extends AbstractActionController
 {
-
-    public function createAction()
-    {
-        return parent::indexAction();
-    }
 
     public function indexAction()
     {
@@ -36,7 +29,12 @@ class ReportController extends AbstractActionController
         $dateFrom = !empty($_GET['from']) ? strtotime($_GET['from']) : strtotime('first day of this month', time());
         $dateTo = !empty($_GET['to']) ? strtotime($_GET['to']) : strtotime('last day of this month', time());
         $issueId = !empty($_GET['issue']) ? intval($_GET['issue']) : null;
-        $userId = !empty($_GET['user']) ? intval($_GET['user']) : null;
+        $order = !empty($_GET['order']) ? $_GET['order'] : 'asc';
+
+        $userId = $authService->getAuthorizedUser()->getId();
+        if ($authService->getAuthorizedUser()->isAdmin()) {
+            $userId = !empty($_GET['user']) ? intval($_GET['user']) : $userId;
+        }
 
         // select users for filter
 
@@ -53,16 +51,12 @@ class ReportController extends AbstractActionController
         /** @var ReportService $reportService */
         $reportService = $this->getServiceLocator()->get('ReportService');
 
-        $filterUserId = $authService->getAuthorizedUser()->getId();
-        if (!empty($userId) && $authService->getAuthorizedUser()->isAdmin()) {
-            $filterUserId = $userId;
-        }
-
         $reports = $reportService->findByUser(
-            $filterUserId,
+            $userId,
             date('Y-m-d', $dateFrom),
             date('Y-m-d', $dateTo),
-            $issueId
+            $issueId,
+            $order
         );
 
         // set variables for view
@@ -74,7 +68,10 @@ class ReportController extends AbstractActionController
         $viewModel->setVariable('issueId', $issueId);
         $viewModel->setVariable('userId', $userId);
         $viewModel->setVariable('users', $users);
+        $viewModel->setVariable('currentUser', $authService->getAuthorizedUser());
+        $viewModel->setVariable('order', $order);
         return $viewModel;
+
     }
 
     public function exportAction()

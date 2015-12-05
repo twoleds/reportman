@@ -47,6 +47,12 @@ SET
   `email`    = 'lukas.kvc@gmail.com',
   `password` = '$2y$10$HnAkR6XsWeuv4l.oo2sj0OaUEWRGZbBrDhO4AL8sd981Cm4cNH59G';
 
+INSERT INTO `users`
+SET
+  `name`     = 'Michal Tinka',
+  `email`    = 'michal.tinka@gmail.com',
+  `password` = '$2y$10$HnAkR6XsWeuv4l.oo2sj0OaUEWRGZbBrDhO4AL8sd981Cm4cNH59G';
+
 INSERT INTO `reports`
 SET
   `issue_id`       = 1,
@@ -136,3 +142,34 @@ SET
   `complete`       = 25,
   `user_id`        = 1,
   `date`           = '2015-12-04';
+
+INSERT INTO `reports`
+SET
+  `issue_id`       = 1,
+  `issue_text`     = 'Studying ajax / restful controllers and JSON responses',
+  `spent_time`     = 60,
+  `estimated_time` = 4545,
+  `complete`       = 15,
+  `user_id`        = 1,
+  `date`           = '2015-12-05';
+
+INSERT INTO `reports`
+SET
+  `issue_id`       = 2,
+  `issue_text`     = 'Created restful controller for reading & editing reports',
+  `spent_time`     = 150,
+  `estimated_time` = 1920,
+  `complete`       = 30,
+  `user_id`        = 1,
+  `date`           = '2015-12-05';
+
+
+INSERT INTO `reports`
+SET
+  `issue_id`       = 3,
+  `issue_text`     = 'Testing project reportman',
+  `spent_time`     = 30,
+  `estimated_time` = 240,
+  `complete`       = 30,
+  `user_id`        = 2,
+  `date`           = '2015-12-05';

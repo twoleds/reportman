@@ -29,15 +29,9 @@
                 <?php if (!empty($this->currentUser)): ?>
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="javascript:alert('Not implemented yet');">
+                        <a href="javascript:ReportDialog.create();">
                             <span class="glyphicon glyphicon-plus"></span>
                             <?= $this->translate('New report'); ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= $this->url('report-index'); ?>">
-                            <span class="glyphicon glyphicon-list"></span>
-                            <?= $this->translate('Reports'); ?>
                         </a>
                     </li>
                 </ul>
@@ -46,7 +40,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a href="#">
-                                <img src="<?= $this->currentUser->getAvatar(20); ?>" width="20" height="20" class="navbar-avatar" />
+                                <img src="<?= $this->currentUser->getAvatar(20); ?>" width="20" height="20" class="user-avatar" />
                                 <?= htmlspecialchars($this->currentUser->getName()); ?>
                             </a>
                         </li>

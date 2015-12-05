@@ -30,6 +30,7 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
                     'Home' => 'Reportman\Controllers\HomeController',
                     'User' => 'Reportman\Controllers\UserController',
                     'Report' => 'Reportman\Controllers\ReportController',
+                    'ReportAjax' => 'Reportman\Controllers\ReportAjaxController',
                 ),
             ),
             'router' => [
@@ -84,16 +85,6 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
                             ],
                         ],
                     ],
-                    'report-create' => [
-                        'type' => 'Literal',
-                        'options' => [
-                            'route' => '/report/create/',
-                            'defaults' => [
-                                'controller' => 'Report',
-                                'action' => 'create',
-                            ],
-                        ],
-                    ],
                     'report-index' => [
                         'type' => 'Literal',
                         'options' => [
@@ -114,6 +105,18 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
                             ],
                         ],
                     ],
+                    'report-ajax' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/report-ajax[/:id]',
+                            'constraints' => array(
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'ReportAjax',
+                            ),
+                        ),
+                    ),
                 ],
             ],
             'view_manager' => [
@@ -131,6 +134,9 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
                 'template_path_stack' => [
                     __DIR__ . '/views',
                 ],
+                'strategies' => array(
+                    'ViewJsonStrategy',
+                ),
             ],
         ];
     }
