@@ -171,4 +171,84 @@ class UserController extends AbstractActionController
 
     }
 
+    public function settingsAction()
+    {
+
+        try {
+
+            /** @var AuthService $authService */
+            $authService = $this->getServiceLocator()->get('AuthService');
+
+            /** @var UserService $userService */
+            $userService = $this->getServiceLocator()->get('UserService');
+
+            if (!$authService->authorize()) {
+                throw new \Exception('Unauthorized access.');
+            }
+
+            // process input parameters
+
+            $name = new Input('name');
+            $name->getValidatorChain()
+                ->attach(new StringLength(1));
+
+            $email = new Input('email');
+            $email->getValidatorChain()
+                ->attach(new EmailAddress());
+
+            $password = new Input('password');
+            $password->getValidatorChain()
+                ->attach(new StringLength(6));
+
+            $inputFilter = new InputFilter();
+            $inputFilter
+                ->add($name)
+                ->add($email)
+                ->add($password)
+                ->setData($_POST);
+
+            if (!$inputFilter->isValid()) {
+                throw new \Exception('Some fields have invalid value.');
+            }
+
+            // update user
+
+            $user = $authService->getAuthorizedUser();
+
+            if (!$user->verifyPassword($inputFilter->getValue('password'))) {
+                throw new \Exception('Your current password is wrong.');
+            }
+
+            $user->setName($inputFilter->getValue('name'));
+            $user->setEmail($inputFilter->getValue('email'));
+
+            if (!empty($_POST['password-new'])) {
+                $password->setValue($_POST['password-new']);
+                if (!$password->isValid()) {
+                    throw new \Exception('Your new password is invalid. It must contains at least 6 letters.');
+                }
+                $user->setPassword($_POST['password-new']);
+            }
+
+            $userService->save($user);
+
+            // return output
+
+            return new JsonModel([
+                'error' => null,
+                'result' => true,
+            ]);
+
+        } catch (\PDOException $ex) {
+            return new JsonModel([
+                'error' => 'Cannot update data in database.',
+            ]);
+        } catch (\Exception $ex) {
+            return new JsonModel([
+                'error' => $ex->getMessage(),
+            ]);
+        }
+
+    }
+
 }

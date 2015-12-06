@@ -31,6 +31,10 @@ $(function () {
         'show': false
     });
 
+    $('#user-settings').modal({
+        'show': false
+    });
+
 });
 
 function reportDelete(id) {
@@ -210,6 +214,52 @@ ReportDialog.save = function () {
         }, 250);
     }).fail(function (err) {
         console.log(err);
+    });
+
+};
+
+var UserSettings = {};
+
+UserSettings.show = function () {
+    $('#user-settings').modal('show');
+};
+
+UserSettings.save = function () {
+
+    var $userName = $('#user-settings-name');
+    var $userEmail = $('#user-settings-email');
+    var $userPasswordNew = $('#user-settings-password-new');
+    var $userPasswordRetype = $('#user-settings-password-retype');
+    var $userPassword = $('#user-settings-password');
+
+    if ($userPassword.val() == '') {
+        alert('You must type your current password.');
+        return;
+    }
+
+    if ($userPasswordNew.val() != $userPasswordRetype.val()) {
+        alert('Your new passwords don\'t match.');
+        return;
+    }
+
+    $.ajax({
+        url: '/settings',
+        type: 'POST',
+        data: {
+            name: $userName.val(),
+            email: $userEmail.val(),
+            password: $userPassword.val(),
+            "password-new": $userPasswordNew.val()
+        },
+        dataType: "json"
+    }).done(function (result) {
+        if (result.error != null) {
+            alert(result.error);
+        } else {
+            location.reload();
+        }
+    }).fail(function () {
+        alert('Cannot change user settings.');
     });
 
 };

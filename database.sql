@@ -163,6 +163,15 @@ SET
   `user_id`        = 1,
   `date`           = '2015-12-05';
 
+INSERT INTO `reports`
+SET
+  `issue_id`       = 2,
+  `issue_text`     = 'Dialog for changing user settings',
+  `spent_time`     = 60,
+  `estimated_time` = 1860,
+  `complete`       = 30,
+  `user_id`        = 1,
+  `date`           = '2015-12-03';
 
 INSERT INTO `reports`
 SET

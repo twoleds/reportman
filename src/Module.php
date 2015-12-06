@@ -85,6 +85,16 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface, ViewH
                             ],
                         ],
                     ],
+                    'settings' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/settings',
+                            'defaults' => [
+                                'controller' => 'User',
+                                'action' => 'settings',
+                            ],
+                        ],
+                    ],
                     'report-index' => [
                         'type' => 'Literal',
                         'options' => [
